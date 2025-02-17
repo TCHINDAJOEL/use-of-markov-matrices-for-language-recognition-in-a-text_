@@ -1,0 +1,758 @@
+text classification using machine learning techniques
+m. ikonomakis
+department of mathematics
+university of patras, greece
+ikonomakis@mailbox.gr
+s. kotsiantis
+department of mathematics
+university of patras, greece
+sotos@math.upatras.gr
+v. tampakas
+technological educational
+institute of patras, greece
+tampakas@teipat.gr
+abstract: automated text classification has been considered as a vital method to manage and process a vast
+amount of documents in digital forms that are widespread and continuously increasing. in general, text
+classification plays an important role in information extraction and summarization, text retrieval, and questionanswering.
+this paper illustrates the text classification process using machine learning techniques. the
+references cited cover the major theoretical issues and guide the researcher to interesting research directions.
+key-words: text mining, learning algorithms, feature selection, text representation
+1 introduction
+automatic text classification has always been an
+important application and research topic since the
+inception of digital documents. today, text
+classification is a necessity due to the very large
+amount of text documents that we have to deal with
+daily.
+in general, text classification includes topic based
+text classification and text genre-based
+classification. topic-based text categorization
+classifies documents according to their topics [33].
+texts can also be written in many genres, for
+instance: scientific articles, news reports, movie
+reviews, and advertisements. genre is defined on
+the way a text was created, the way it was edited,
+the register of language it uses, and the kind of
+audience to it is addressed. previous work on
+genre classification recognized that this task differs
+from topic-based categorization [13].
+typically, most data for genre classification are
+collected from the web, through newsgroups,
+bulletin boards, and broadcast or printed news.
+they are multi-source, and consequently have
+different formats, different preferred vocabularies
+and often significantly different writing styles even
+for documents within one genre. namely, the data
+are heterogenous.
+intuitively text classification is the task of
+classifying a document under a predefined
+category. more formally, if i d is a document of the
+entire set of documents d and { } 1 2 , ,..., n c c c is the
+set of all the categories, then text classification
+assigns one category j c to a document i d .
+as in every supervised machine learning task, an
+initial dataset is needed. a document may be
+assigned to more than one category (ranking
+classification), but in this paper only researches on
+hard categorization (assigning a single category to
+each document) are taken into consideration.
+moreover, approaches, that take into consideration
+other information besides the pure text, such as
+hierarchical structure of the texts or date of
+publication, are not presented. this is because the
+main issue of this paper is to present techniques
+that exploit the most of the text of each document
+and perform best under this condition.
+sebastiani gave an excellent review of text
+classification domain [25]. thus, in this work apart
+from the brief description of the text classification
+we refer to some more recent works than those in
+sebastiani’s article as well as few articles that were
+not referred by sebastiani. in figure 1 is given the
+graphical representation of the text classification
+process.
+.
+fig. 1. text classification process
+the task of constructing a classifier for
+documents does not differ a lot from other tasks of
+machine learning. the main issue is the
+representation of a document [16]. in section 2 the
+document representation is presented. one
+particularity of the text categorization problem is
+read
+document
+tokenize
+text
+stemming
+delete
+stopwords
+vector representation of
+text
+feature selection and/or
+feature transformation
+learning
+algorithm
+that the number of features (unique words or
+phrases) can easily reach orders of tens of
+thousands. this raises big hurdles in applying many
+sophisticated learning algorithms to the text
+categorization
+thus dimension reduction methods are called for.
+two possibilities exist, either selecting a subset of
+the original features [3], or transforming the
+features into new ones, that is, computing new
+features as some functions of the old ones [10]. we
+examine both in turn in section 3 and section 4.
+after the previous steps a machine learning
+algorithm can be applied. some algorithms have
+been proven to perform better in text classification
+tasks and are more often used; such as support
+vector machines. a brief description of recent
+modification of learning algorithms in order to be
+applied in text classification is given in section 5.
+there are a number of methods to evaluate the
+performance of a machine learning algorithms in
+text classification. most of these methods are
+described in section 6. some open problems are
+mentioned in the last section.
+2 vector space document
+representations
+a document is a sequence of words [16]. so each
+document is usually represented by an array of
+words. the set of all the words of a training set is
+called vocabulary, or feature set. so a document
+can be presented by a binary vector, assigning the
+value 1 if the document contains the feature-word
+or 0 if the word does not appear in the document.
+this can be translated as positioning a document in
+a rv space, were v denotes the size of the
+vocabulary v .
+not all of the words presented in a document can
+be used in order to train the classifier [19]. there
+are useless words such as auxiliary verbs,
+conjunctions and articles. these words are called
+stopwords. there exist many lists of such words
+which are removed as a preprocess task. this is
+done because these words appear in most of the
+documents.
+stemming is another common preprocessing step.
+in order to reduce the size of the initial feature set
+is to remove misspelled or words with the same
+stem. a stemmer (an algorithm which performs
+stemming), removes words with the same stem and
+keeps the stem or the most common of them as
+feature. for example, the words “train”, “training”,
+“trainer” and “trains” can be replaced with “train”.
+although stemming is considered by the text
+classification community to amplify the classifiers
+performance, there are some doubts on the actual
+importance of aggressive stemming, such as
+performed by the porter stemmer [25].
+an ancillary feature engineering choice is the
+representation of the feature value [16]. often a
+boolean indicator of whether the word occurred in
+the document is sufficient. other possibilities
+include the count of the number of times the word
+occurred in the document, the frequency of its
+occurrence normalized by the length of the
+document, the count normalized by the inverse
+document frequency of the word. in situations
+where the document length varies widely, it may be
+important to normalize the counts. further, in short
+documents words are unlikely to repeat, making
+boolean word indicators nearly as informative as
+counts. this yields a great savings in training
+resources and in the search space of the induction
+algorithm. it may otherwise try to discretize each
+feature optimally, searching over the number of
+bins and each bin’s threshold.
+most of the text categorization algorithms in the
+literature represent documents as collections of
+words. an alternative which has not been
+sufficiently explored is the use of word meanings,
+also known as senses. kehagias et al. using several
+algorithms, they compared the categorization
+accuracy of classifiers based on words to that of
+classifiers based on senses [12]. the document
+collection on which this comparison took place is a
+subset of the annotated brown corpus semantic
+concordance. a series of experiments indicated that
+the use of senses does not result in any significant
+categorization improvement.
+3 feature selection
+the aim of feature-selection methods is the
+reduction of the dimensionality of the dataset by
+removing features that are considered irrelevant for
+the classification [6]. this transformation
+procedure has been shown to present a number of
+advantages, including smaller dataset size, smaller
+computational requirements for the text
+categorization algorithms (especially those that do
+not scale well with the feature set size) and
+considerable shrinking of the search space. the
+goal is the reduction of the curse of dimensionality
+to yield improved classification accuracy. another
+benefit of feature selection is its tendency to reduce
+overfitting, i.e. the phenomenon by which a
+classifier is tuned also to the contingent
+characteristics of the training data rather than the
+constitutive characteristics of the categories, and
+therefore, to increase generalization.
+methods for feature subset selection for text
+document classification task use an evaluation
+function that is applied to a single word [27].
+scoring of individual words (best individual
+features) can be performed using some of the
+measures, for instance, document frequency, term
+frequency, mutual information, information gain,
+odds ratio, ?2 statistic and term strength [3], [30],
+[6], [28], [27]. what is common to all of these
+feature-scoring methods is that they conclude by
+ranking the features by their independently
+determined scores, and then select the top scoring
+features. the most common metrics are presented
+in table 1. the symbolisms that are presented in
+table 1 are described in table 2.
+on the contrary with best individual features
+(bif) methods, sequential forward selection (sfs)
+methods firstly select the best single word
+evaluated by given criterion [20]; then, add one
+word at a time until the number of selected words
+reaches desired k words. sfs methods do not result
+in the optimal words subset but they take note of
+dependencies between words as opposed to the bif
+methods. therefore sfs often give better results
+than bif. however, sfs are not usually used in
+text classification because of their computation cost
+due to large vocabulary size.
+forman has present benchmark comparison of 12
+metrics on well known training sets [6]. according
+to forman, bns performed best by wide margin
+using 500 to 1000 features, while information gain
+outperforms the other metrics  the features
+vary between 20 and 50. accuracy 2 performed
+equally well as information gain. concerning the
+performance of chi-square, it was consistently
+worse the information gain. since there is no
+metric that performs constantly better than all
+others, researchers often combine two metrics in
+order to benefit from both metrics [6].
+novovicova et al. used sfs that took into
+account, not only the mutual information between a
+class and a word but also between a class and two
+words [22]. the results were slightly better.
+although machine learning based text
+classification is a good method as far as
+performance is concerned, it is inefficient for it to
+handle the very large training corpus. thus, apart
+from feature selection, many times instance
+selection is needed.
+c a class of the training set
+c the set of classes of the training set
+d a document of the training set
+d or db the set of documents of the training set
+t or w a term or word
+p(c) or ( ) i p c the probability of the class c or i c respectively how often the class appears in the
+training set
+p(¬c) or p(c) the probability of the class not occurring
+p(c|t) the probability of the class c given that the term t appears respectively, p(c |t)
+denotes the probability of class c not occurring, given that the term t appears
+p(c,t) the probability of the class c and term t occurring simultaneously
+h(c) the entropy of the set c
+( ) i df t the document frequency of term k t
+( ) n df t the frequency of term t in documents containing t in every of their n splits
+( ) ~
+df t
+the document frequency, taking into consideration only documents in which t appears
+more than once
+#(c) or #(t ) the number of documents which belong to class or respectively contain the term t
+#(c,t) the number of documents containing term t and belong to class c
+table 2. symbolisms
+guan and zhou proposed a training-corpus
+pruning based approach to speedup the process [8].
+by using this approach, the size of training corpus
+can be reduced significantly while classification
+performance can be kept at a level close to that of
+without training documents pruning according to
+their experiments.
+fragoudis et al. [7] integrated feature and
+instance selection for text classification with even
+better results. their method works in two steps. in
+the first step, their method sequentially selects
+features that have high precision in predicting the
+target class. all documents that do not contain at
+least one such feature are dropped from the training
+set. in the second step, their method searches
+within this subset of the initial dataset for a set of
+features that tend to predict the complement of the
+target class and these features are also selected. the
+sum of the features selected during these two steps
+is the new feature set and the documents selected
+from the first step comprise the training set
+4 feature transformation
+feature transformation varies significantly from
+feature selection approaches, but like them its
+purpose is to reduce the feature set size [10]. this
+approach does not weight terms in order to discard
+the lower weighted but compacts the vocabulary
+based on feature concurrencies.
+principal component analysis is a well known
+method for feature transformation [38]. its aim is to
+learn a discriminative transformation matrix in
+order to reduce the initial feature space into a lower
+dimensional feature space in order to reduce the
+complexity of the classification task without any
+trade-off in accuracy. the transform is derived
+from the eigenvectors corresponding. the
+covariance matrix of data in pca corresponds to
+the document term matrix multiplied by its
+transpose. entries in the covariance matrix
+represent co-occurring terms in the documents.
+eigenvectors of this matrix corresponding to the
+dominant eigenvalues are now directions related to
+dominant combinations can be called “topics” or
+“semantic concepts”. a transform matrix
+constructed from these eigenvectors projects a
+document onto these “latent semantic concepts”,
+and the new low dimensional representation
+consists of the magnitudes of these projections. the
+eigenanalysis can be computed efficiently by a
+sparse variant of singular value decomposition of
+the document-term matrix [11].
+in the information retrieval community this
+method has been named latent semantic indexing
+(lsi) [23]. this approach is not intuitive
+discernible for a human but has a good
+performance.
+qiang et al [37] performed experiments using k-
+nn lsi, a new combination of the standard k-nn
+method on top of lsi, and applying a new matrix
+decomposition algorithm, semi-discrete matrix
+decomposition, to decompose the vector matrix.
+the experimental results showed that text
+categorization effectiveness in this space was better
+and it was also computationally less costly, because
+it needed a lower dimensional space.
+the authors of [4] present a comparison of the
+performance of a number of text categorization
+methods in two different data sets. in particular,
+they evaluate the vector and lsi methods, a
+classifier based on support vector machines
+(svm) and the k-nearest neighbor variations of
+the vector and lsi models. their results show that
+overall, svms and k-nn lsi perform better than
+the other methods, in a statistically significant way.
+5 machine learning algorithms
+after feature selection and transformation the
+documents can be easily represented in a form that
+can be used by a ml algorithm. many text
+classifiers have been proposed in the literature
+using machine learning techniques, probabilistic
+models, etc. they often differ in the approach
+adopted: decision trees, naive-bayes, rule
+induction, neural networks, nearest neighbors, and
+lately, support vector machines. although many
+approaches have been proposed, automated text
+classification is still a major area of research
+primarily because the effectiveness of current
+automated text classifiers is not faultless and still
+needs improvement.
+naive bayes is often used in text classification
+applications and experiments because of its
+simplicity and effectiveness [14]. however, its
+performance is often degraded because it does not
+model text well. schneider addressed the problems
+and show that they can be solved by some simple
+corrections [24]. klopotek and woch presented
+results of empirical evaluation of a bayesian
+multinet classifier based on a new method of
+learning very large tree-like bayesian networks
+[15]. the study suggests that tree-like bayesian
+networks are able to handle a text classification
+task in one hundred thousand variables with
+sufficient speed and accuracy.
+support vector machines (svm),  applied to
+text classification provide excellent precision, but
+poor recall. one means of customizing svms to
+improve recall, is to adjust the threshold associated
+with an svm. shanahan and roma described an
+automatic process for adjusting the thresholds of
+generic svm [26] with better results.
+johnson et al. described a fast decision tree
+construction algorithm that takes advantage of the
+sparsity of text data, and a rule simplification
+method that converts the decision tree into a
+logically equivalent rule set [9].
+lim proposed a method which improves
+performance of knn based text classification by
+using well estimated parameters [18]. some
+variants of the knn method with different decision
+functions, k values, and feature sets were proposed
+and evaluated to find out adequate parameters.
+corner classification (cc) network is a kind of
+feed forward neural network for instantly document
+classification. a training algorithm, named as
+textcc is presented in [34].
+the level of difficulty of text classification tasks
+naturally varies. as the number of distinct classes
+increases, so does the difficulty, and therefore the
+size of the training set needed. in any multi-class
+text classification task, inevitably some classes will
+be more difficult than others to classify. reasons
+for this may be: (1) very few positive training
+examples for the class, and/or (2) lack of good
+predictive features for that class.
+ training a binary classifier per category in
+text categorization, we use all the documents in the
+training corpus that belong to that category as
+relevant training data and all the documents in the
+training corpus that belong to all the other
+categories as non-relevant training data. it is often
+the case that there is an overwhelming number of
+non relevant training documents especially 
+there is a large collection of categories with each
+assigned to a small number of documents, which is
+typically an “imbalanced data problem". this
+problem presents a particular challenge to
+classification algorithms, which can achieve high
+accuracy by simply classifying every example as
+negative. to overcome this problem, cost sensitive
+learning is needed [5].
+a scalability analysis of a number of classifiers
+in text categorization is given in [32]. vinciarelli
+presents categorization experiments performed over
+noisy texts [31]. by noisy it is meant any text
+obtained through an extraction process (affected by
+errors) from media other than digital texts (e.g.
+transcriptions of speech recordings extracted with a
+recognition system). the performance of the
+categorization system over the clean and noisy
+(word error rate between ~10 and ~50 percent)
+versions of the same documents is compared. the
+noisy texts are obtained through handwriting
+recognition and simulation of optical character
+recognition. the results show that the performance
+loss is acceptable.
+other authors [36] also proposed to parallelize
+and distribute the process of text classification.
+with such a procedure, the performance of
+classifiers can be improved in both accuracy and
+time complexity.
+recently in the area of machine learning the
+concept of combining classifiers is proposed as a
+new direction for the improvement of the
+performance of individual classifiers. numerous
+methods have been suggested for the creation of
+ensemble of classifiers. mechanisms that are used
+to build ensemble of classifiers include: i) using
+different subset of training data with a single
+learning method, ii) using different training
+parameters with a single training method (e.g. using
+different initial weights for each neural network in
+an ensemble), iii) using different learning methods.
+in the context of combining multiple classifiers
+for text categorization, a number of researchers
+have shown that combining different classifiers can
+improve classification accuracy [1], [29].
+comparison between the best individual classifier
+and the combined method, it is observed that the
+performance of the combined method is superior
+[2]. nardiello et al. [21] also proposed algorithms
+in the family of "boosting"-based learners for
+automated text classification with good results.
+6 evaluation
+there are various methods to determine
+effectiveness; however, precision, recall, and
+accuracy are most often used. to determine these,
+one must first begin by understanding if the
+classification of a document was a true positive
+(tp), false positive (fp), true negative (tn), or
+false negative (fn) (see table 3).
+tp determined as a document being classified
+correctly as relating to a category.
+fp determined as a document that is said to be
+related to the category incorrectly.
+fn determined as a document that is not marked
+as related to a category but should be.
+tn documents that should not be marked as being
+in a particular category and are not.
+table 3. classification of a document
+precision (pi) is determined as the conditional
+probability that a random document d is classified
+under ci, or what would be deemed the correct
+category. it represents the classifiers ability to place
+a document as being under the correct category as
+opposed to all documents place in that category,
+both correct and incorrect:
+i
+i i
+tp
+i tp fp p + =
+recall (?i) is defined as the probability that, if a
+random document dx should be classified under
+category (ci), this decision is taken.
+i
+i i
+tp
+i tp fn ? + =
+accuracy is commonly used as a measure for
+categorization techniques. accuracy values,
+however, are much less reluctant to variations in
+the number of correct decisions than precision and
+recall:
+i i i i
+i i
+tp tn fp fn
+tp tn
+i a + + +
+= +
+many times there are very few instances of the
+interesting category in text categorization. this
+overrepresentation of the negative class in
+information retrieval problems can cause problems
+in evaluating classifiers' performances using
+accuracy. since accuracy is not a good metric for
+skewed datasets, the classification performance of
+algorithms in this case is measured by precision
+and recall [5].
+furthermore, precision and recall are often
+combined in order to get a better picture of the
+performance of the classifier. this is done by
+combining them in the following formula:
+( 2 )
+2
+1
+fß
+ß p?
+ß p ?
++
+=
++
+,
+where p and ? denote presicion and recall
+respectively. ß is a positive parameter, which
+represents the goal of the evaluation task. if
+presicion is considered to be more important that
+recall, then the value of ß converges to zero. on the
+other hand, if recall is more important than
+presicion then ß converges to infinity. usually ß is
+set to 1, because in this way equal importance is
+given to each presicion and recall.
+reuters corpus volume i (rcv1) is an archive
+of over 800,000 manually categorized newswire
+stories recently made available by reuters, ltd. for
+research purposes [17]. using this collection, we
+can compare the learning algorithms.
+although research in the pass years had shown
+that training corpus could impact classification
+performance, little work was done to explore the
+underlying causes. the authors of [35] try to
+propose an approach to build semi-automatically
+high-quality training corpuses for better
+classification performance by first exploring the
+properties of training corpuses, and then giving an
+algorithm for constructing training corpuses semiautomatically.
+7 conclusion
+the text classification problem is an artificial
+intelligence research topic, especially given the
+vast number of documents available in the form of
+web pages and other electronic texts like emails,
+discussion forum postings and other electronic
+documents.
+it has observed that even for a specified
+classification method, classification performances
+of the classifiers based on different training text
+corpuses are different; and in some cases such
+differences are quite substantial. this observation
+implies that a) classifier performance is relevant to
+its training corpus in some degree, and b) good or
+high quality training corpuses may derive
+classifiers of good performance. unfortunately, up
+to now little research work in the literature has been
+seen on how to exploit training text corpuses to
+improve classifier’s performance.
+some important conclusions have not been
+reached yet, including:
+• which feature selection methods are both
+computationally scalable and high-performing
+across classifiers and collections? given the
+high variability of text collections, do such
+methods even exist?
+• would combining uncorrelated, but wellperforming
+methods yield a performance
+increase?
+• change the thinking from word frequency
+based vector space to concepts based vector
+space. study the methodology of feature
+selection under concepts, to see if these will
+help in text categorization.
+• make the dimensionality reduction more
+efficient over large corpus.
+moreover, there are other two open problems in
+text mining: polysemy, synonymy. polysemy refers
+to the fact that a word can have multiple meanings.
+distinguishing between different meanings of a
+word (called word sense disambiguation) is not
+easy, often requiring the context in which the word
+appears. synonymy means that different words can
+have the same or similar meaning.
+references:
+[1] bao y. and ishii n., “combining multiple knn
+classifiers for text categorization by
+reducts”, lncs 2534, 2002, pp. 340-347
+[2] bi y., bell d., wang h., guo g., greer k.,
+”combining multiple classifiers using
+dempster's rule of combination for text
+categorization”, mdai, 2004, 127-138.
+[3] brank j., grobelnik m., milic-frayling n.,
+mladenic d., “interaction of feature selection
+methods and linear classification models”,
+proc. of the 19th international conference on
+machine learning, australia, 2002.
+[4] ana cardoso-cachopo, arlindo l. oliveira, an
+empirical comparison of text categorization
+methods, lecture notes in computer science,
+volume 2857, jan 2003, pages 183 - 196
+[5] chawla, n. v., bowyer, k. w., hall, l. o.,
+kegelmeyer, w. p., “smote: synthetic
+minority over-sampling technique,” journal
+of ai research, 16 2002, pp. 321-357.
+[6] forman, g., an experimental study of feature
+selection metrics for text categorization.
+journal of machine learning research, 3 2003,
+pp. 1289-1305
+[7] fragoudis d., meretakis d., likothanassis s.,
+“integrating feature and instance selection for
+text classification”, sigkdd ’02, july 23-26,
+2002, edmonton, alberta, canada.
+[8] guan j., zhou s., “pruning training corpus to
+speedup text classification”, dexa 2002, pp.
+831-840
+[9] d. e. johnson, f. j. oles, t. zhang, t. goetz,
+“a decision-tree-based symbolic rule induction
+system for text categorization”, ibm systems
+journal, september 2002.
+[10] han x., zu g., ohyama w., wakabayashi
+t., kimura f., accuracy improvement of
+automatic text classification based on
+feature transformation and multi-classifier
+combination, lncs, volume 3309, jan 2004,
+pp. 463-468
+[11] ke h., shaoping m., “text categorization
+based on concept indexing and principal
+component analysis”, proc. tencon 2002
+conference on computers, communications,
+control and power engineering, 2002, pp. 51-
+56.
+[12] kehagias a., petridis v., kaburlasos v.,
+fragkou p., “a comparison of word- and
+sense-based text categorization using
+several classification algorithms”, jiis,
+volume 21, issue 3, 2003, pp. 227-247.
+[13] b. kessler, g. nunberg, and h. schutze.
+automatic detection of text genre. in
+proceedings of the thirty-fifth acl and
+eacl, pages 32–38, 1997.
+[14] kim s. b., rim h. c., yook d. s. and lim
+h. s., “effective methods for improving naive
+bayes text classifiers”, lnai 2417, 2002, pp.
+414-423
+[15] klopotek m. and woch m., “very large
+bayesian networks in text classification”,
+iccs 2003, lncs 2657, 2003, pp. 397-406
+[16] leopold, edda & kindermann, jörg, “text
+categorization with support vector machines.
+how to represent texts in input space?”,
+machine learning 46, 2002, pp. 423 - 444.
+[17] lewis d., yang y., rose t., li f., “rcv1:
+a new benchmark collection for text
+categorization research”, journal of machine
+learning research 5, 2004, pp. 361-397.
+[18] heui lim, improving knn based text
+classification with well estimated parameters,
+lncs, vol. 3316, oct 2004, pages 516 - 523.
+[19] madsen r. e., sigurdsson s., hansen l. k.
+and lansen j., “pruning the vocabulary for
+better context recognition”, 7th international
+conference on pattern recognition, 2004
+[20] montanes e., quevedo j. r. and diaz i.,
+“a wrapper approach with support vector
+machines for text categorization”, lncs
+2686, 2003, pp. 230-237
+[21] nardiello p., sebastiani f., sperduti a.,
+“discretizing continuous attributes in
+adaboost for text categorization”, lncs,
+volume 2633, jan 2003, pp. 320-334
+[22] novovicova j., malik a., and pudil p.,
+“feature selection using improved mutual
+information for text classification”,
+sspr&spr 2004, lncs 3138, pp. 1010–
+1017, 2004
+[23] qiang w., xiaolong w., yi g., “a study
+of semi-discrete matrix decomposition for lsi
+in automated text categorization”, lncs,
+volume 3248, jan 2005, pp. 606-615.
+[24] schneider, k., techniques for improving
+the performance of naive bayes for text
+classification, lncs, vol. 3406, 2005, 682-
+693.
+[25] sebastiani f., “machine learning in
+automated text categorization”, acm
+computing surveys, vol. 34 (1),2002, pp. 1-47.
+[26] shanahan j. and roma n., improving svm
+text classification performance through
+threshold adjustment, lnai 2837, 2003, 361-
+372
+[27] soucy p. and mineau g., “feature
+selection strategies for text categorization”,
+ai 2003, lnai 2671, 2003, pp. 505-509
+[28] sousa p., pimentao j. p., santos b. r. and
+moura-pires f., “feature selection algorithms
+to improve documents classification
+performance”, lnai 2663, 2003, pp. 288-296
+[29] sung-bae cho, jee-haeng lee, learning
+neural network ensemble for practical text
+classification, lecture notes in computer
+science, volume 2690, aug 2003, pages 1032
+– 1036.
+[30] torkkola k., “discriminative features for
+text document classification”, proc.
+international conference on pattern
+recognition, canada, 2002.
+[31] vinciarelli a., “noisy text categorization,
+pattern recognition”, 17th international
+conference on (icpr'04) , 2004, pp. 554-557
+[32] y. yang, j. zhang and b. kisiel., “a
+scalability analysis of classifiers in text
+categorization”, acm sigir'03, 2003, pp 96-
+103
+[33] y. yang. an evaluation of statistical
+approaches to text categorization. journal of
+information retrieval, 1(1/2):67–88, 1999.
+[34] zhenya zhang, shuguang zhang, enhong
+chen, xufa wang, hongmei cheng, textcc:
+new feed forward neural network for
+classifying documents instantly, lecture
+notes in computer science, volume 3497, jan
+2005, pages 232 – 237.
+[35] shuigeng zhou, jihong guan, evaluation
+and construction of training corpuses for text
+classification: a preliminary study, lecture
+notes in computer science, volume 2553, jan
+2002, page 97-108.
+[36] verayuth lertnattee, thanaruk
+theeramunkong, parallel text categorization
+for multi-dimensional data, lecture notes in
+computer science, volume 3320, jan 2004,
+pages 38 - 41
+[37] wang qiang, wang xiaolong, guan yi, a
+study of semi-discrete matrix decomposition
+for lsi in automated text categorization,
+lecture notes in computer science, volume
+3248, jan 2005, pages 606 – 615.
+[38] zu g., ohyama w., wakabayashi t.,
+kimura f., "accuracy improvement of
+automatic text classification based on feature
+transformation": proc: the 2003 acm
+symposium on document engineering,
+november 20-22, 2003, pp.118-120

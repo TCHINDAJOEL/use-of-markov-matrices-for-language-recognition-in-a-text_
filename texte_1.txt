@@ -1,0 +1,168 @@
+les traitements statistiques de donnees textuelles. (l. lebart, cnrs-enst ; lebart@enst.fr)
+le materiau statistique � texte � est omnipresent, presque banal, depuis le developpement
+d�internet et de la toile (web). l�etude quantitative et statistique de ces textes semble avoir fait
+irruption recemment, et pourtant les etudes statistiques de textes datent de plusieurs
+decennies, avec notamment en france les travaux de p. guiraud (problemes et methodes de la
+statistique linguistique, puf, 1960), c. muller (principes et methodes de statistique lexicale,
+hachette, 1977) puis de j.p. benzecri (pratique de l�analyse des donnees, tome 3 :
+linguistique et lexicologie, dunod, 1981).
+apres la � stylometrie �, consacree � l�etude de la forme des textes, en vue d�identifier un
+auteur ou de dater une oeuvre, sont apparues les techniques de documentation automatique
+(information retrieval en anglais), visant � rechercher dans une base de documents (articles
+scientifiques, resumes, brevets, �) le ou les elements pertinents � partir d�une requ�te
+exprimee sous forme de textes libres. le champ disciplinaire � traitement du langage
+naturel � est alors apparu, et s�est developpe, au depart, comme un des domaines
+d�application privilegie de l�intelligence artificielle. la complexite du materiau, le besoin
+d�assimiler d�immenses corpus de textes, la pertinence du concept d�apprentissage ont
+naturellement ouvert ce champ aux methodes statistiques. la statistique multidimensionnelle,
+les cha�nes de markov cachees, les methodes d�analyse discriminantes interviennent ainsi
+pour construire les outils de base que sont les moteurs de recherche sur le web, les analyseurs
+morphosyntactiques, les correcteurs orthographiques, ainsi que dans des champs d�application
+pratiques comme le traitement des reponses aux questions ouvertes dans les enqu�tes socioeconomiques.
+les questions ouvertes
+il est utile, dans un certain nombre de situations d'enqu�te, de laisser ouvertes certaines
+questions, dont les reponses se presenteront donc sous forme de textes de longueurs variables.
+le recueil des donnees
+dans au moins trois situations courantes, l'utilisation d'un questionnement ouvert s'impose :
+pour diminuer ou optimiser la duree de l�entrevue d�enqu�te
+bien que les reponses libres et les reponses guidees fournissent des informations de natures
+differentes, les premieres sont plus economiques que les secondes en temps d'interview et
+generent moins de fatigue. une simple question ouverte (par exemple : "quelles furent vos
+principales activites dimanche dernier ?") peut remplacer de longues listes d'items.
+comme complement � des questions fermees
+il s'agit le plus souvent de la question: "pourquoi ?". les explications concernant une reponse
+dej� donnee doivent necessairement �tre spontanee. une batterie d'items risquerait de
+proposer de nouveaux arguments qui pourraient nuire � l'authenticite de l'explication. l'utilite
+de la question pourquoi ? a ete soulignee par de nombreux auteurs, et ce sont en fait les
+difficultes et le co�t de l'exploitation qui en limitent l'usage. elle seule permet en effet de
+savoir si les differentes categories de personnes interrogees ont compris la question fermee de
+la m�me fa�on.
+pour recueillir une information qui doit, par nature, �tre spontanee
+les questionnaires des enqu�tes de marketing abondent en questions de ce type. citons par
+exemple : "qu'avez-vous retenu de cette campagne publicitaire ?", "que pensez-vous de cette
+voiture ?". notons cependant que les questions ouvertes sont considerees comme peu
+adaptees aux problemes de memorisation de comportement. "quels magazines avez-vous lus
+la semaine derniere ?", "quelles sont les dernieres emissions de television que vous avez
+aimees ?". pour ces questions qui font l'objet d'enqu�tes periodiques, il a ete prouve maintes
+fois que les questions fermees donnent des taux d'oubli plus faibles. en revanche, quand la
+qualite de la memorisation est en jeu, la forme ouverte reste indispensable.
+voici quatre exemples de reponses � la question � quelle est pour vous la chose la plus
+importante dans la vie ? � (question posee � des echantillons d�environ mille personnes dans
+sept pays en 1991).
+1) la sante, ne pas manquer d'argent, avoir une bonne ambiance familiale, je voudrais
+pouvoir aider les enfants abandonnes, leur redonner le go�t � la vie, pouvoir aider les
+personnes �gees handicapees, secourir les gens autour de soi.
+2) c'est de faire ce qu'on veut. lire, voyager si je pouvais. les loisirs si on pouvait.
+3) la sante puisqu'il faut toujours travailler quand on est commer�ant. une bonne entente en
+famille. avoir assez d'argent pour vivre.
+4) la famille, ma famille, mon foyer, vivre avec la societe : mon entourage les voisins, pour
+faire quelque chose qu'il y ait moins de malheureux, donner du travail aux jeunes surtout.
+ces exemples illustrent � la fois la complexite et la richesse des reponses.
+les unites statistiques
+les programmes travaillent � partir du texte brut, en extrayant automatiquement des unites
+statistiques, la plupart du temps des formes graphiques (sequences de caracteres nonseparateurs).
+on utilise le vocable forme graphique parce que le mot � mot � lui-m�me est
+ambigu. il designe en effet selon les contextes l�occurrence d�un mot (quand on dit qu�un
+texte a huit cent mots, on parle bien s�r d�occurrences, et non de mots differents), le type (qui
+correspond � la forme graphique) et le lemme (avoir est le lemme de avait, et, dans certains
+cas seulement, de avions). la premiere reponse de l�exemple ci-dessus contient 38
+occurrences, mais la forme graphique � les � appara�t trois fois, � pouvoir � appara�t deux
+fois. le lemme de � bonne � est bon (le masculin singulier, selon une convention fran�aise),
+celui de � voudrais � est � vouloir �.
+dans le cas de l�exemple precedent, pour 1009 reponses, on obtient 14337 occurrences de
+1394 formes distinctes (ou types). il est bien connu que la distribution de frequence des mots
+est tres dissymetrique (loi dite de zipf, apparentee � la distribution de pareto). ainsi, en ne
+retenant que les formes apparaissant au moins 20 fois, il reste un texte de 10 994 formes, avec
+seulement 97 formes distinctes (ainsi 7 % des mots distincts correspondent � 77 % du texte
+global). en particulier, pres de la moitie des formes grahiques distinctes n�apparaissent qu�une
+fois ( ce sont les � hapax �).
+le post-codage
+le pretraitement empirique appele "post-codage" permet de fermer a posteriori les questions
+ouvertes. cette technique courante consiste � construire une batterie d'items � partir d'un sousechantillon
+de reponses, puis � codifier l'ensemble des reponses de fa�on � remplacer la
+question ouverte par une ou plusieurs questions fermees. pour l�exemple ci-dessus, la seconde
+reponse, la plus simple, donnerait les items � lecture �, voyage �, � loisirs �, sous reserve que
+ces items apparaissent avec une certaine frequence dans l�echantillon de reponses. en
+revanche la premiere reponse est plus delicate � post-coder.
+les outils statistique de base
+les outils de base sont la selection de formes caracteristiques, la selection de reponses
+modales, l'analyse des correspondances et la classification des tableaux lexicaux.
+formes ou segments caracteristiques (ou specificites)
+les formes caracteristiques sont les formes "anormalement" frequentes dans les reponses d'un
+groupe d'individus (technique propose par p. lafon en 1980). un test elementaire fonde sur la
+loi hypergeometrique permet de selectionner les mots (formes graphiques ou lemmes) dont la
+frequence dans un groupe est notablement superieure (ou inferieure pour les mots anticaracteristiques)
+� la frequence moyenne dans le corpus. il s�agit de test classique de
+comparaisons de frequences, maisla repetition de ce test conduit � prendre des seuils de
+signification tres severes (phenomene de comparaisons multiples bien connu des statisticiens).
+dans l�exemple evoque plus haut, la frequence moyenne du mot travail dans le corpus etait de
+3.4 %; pour le groupe des femmes de plus de 55 ans, la frequence n�est que de 1.2 %. cette
+difference est en fait hautement significative ( on peut exprimer le test de comparaison de
+frequences en termes d�ecart-types : dans l�hypothese d�homogeneite des frequences, la
+valeur1.2% est � 4.5 ecart-types de la valeur moyenne 3.4). comme il s�agit d�une frequence
+anormalement faible, on parlera de mots anti-caracteristiques. [l�individu statistique est ici
+l�occurrence de mots. les femmes de plus de 55 ans ont emis 1349 mots dans leurs reponses.
+la variance de la frequence d�un mot dont la frequence �theorique� est de 0.034 est donnee
+par la formule classique 0.034(1 � 0.034) /1349. on voit dans ces conditions qe la frequence
+observee de 0.012 est � 4.5 ecart-types de 0.034].
+les selections des reponses modales
+pour un groupe d'individus donne, et donc pour le regroupement de reponses correspondant,
+les reponses modales (ou encore phrases caracteristiques, ou documents-type, la terminologie
+variant selon les domaines d'application) sont des reponses originales du corpus de base, ayant
+la propriete de caracteriser au mieux le groupe. on peut, pour chaque regroupement, calculer
+la distance du profil lexical d'un individu au profil lexical moyen du groupement. on peut
+ensuite classer les distances par ordre croissant, et donc selectionner les reponses les plus
+representatives au sens du profil lexical, qui correspondront aux plus petites distances. on
+obtient ainsi une sorte de resume des reponses de chaque regroupement, forme de reponses
+originales (l. lebart et a. salem, statistique textuelle, dunod, 1994). toujours dans le cas de
+notre exemple, �etre heureux, avoir un bon travail, reussite professionnelle et familiale� est
+ainsi une reponse caracteristique des jeunes hommes; �la sante, la famille� est une reponse
+caracterisant les plus �ges. on utilise en pratique plusierus reponses caracteristiques par
+groupe.
+analyse des correspondances et classification
+le volume des donnees demande que l�on fasse appel � de puissants outils de description. les
+methodes d�analyses des correspondances et de classification peuvent decrire les tables de contingence
+croisant les reponses et les formes graphiques, ou des groupes de reponses (par exemple regroupement
+selon le niveau d'instruction des repondants) et les formes graphiques. elles permettent de visualiser
+sous forme de series de cartes planes (ou de dendrogrammes dans le cas des methodes de
+classification, ou de cartes auto-associatives de kohonen, methode �neuronale� de visualisation) les
+associations entre mots (formes) et groupes ou modalites. ainsi, une visualisation des proximites entre
+mots et categories socioprofessionnelles pourra aider la lecture des reponses de chacune de ces
+categories.
+conclusions et ouvertures
+pour des reponses simples et stereotypees, nous l�avons vu, les procedures de post-codage
+peuvent fonctionner. mentionnons cependant parmi les defauts de ce type de traitement :
+la mediation du chiffreur: les decisions � prendre sont parfois difficiles.
+la qualite de l'expression, le registre du vocabulaire, la tonalite generale de l'entretien sont
+des elements d'analyse perdus lors d'un post-codage (doit-on coder differemment � je ne sais
+pas� et �je prefere ne rien dire� ?.
+les reponses composites, complexes, d'une grande diversite, sont tres difficile � post-coder,
+et c'est souvent dans ce cas que la valeur heuristique des reponses libres est la plus grande.
+les reponses peu frequentes, originales, peu claires en premiere lecture sont considerees
+comme du �bruit�, et affectees � des items residuels (�autres�) qui sont donc tres
+heterogenes et sont difficiles � manipuler.
+sans qu�il soit necessaire de proceder � un post codage, on peut, actuellement, � partir d'une
+ensemble de textes, et d'un seuil de frequence pour les formes graphiques, obtenir une
+visualisation des proximites entre textes (vis-�-vis de leurs profils lexicaux) et entre formes
+graphiques (vis-�-vis de leur repartition dans les textes). l'enrichissement des unites
+statistiques par les segments repetes,(cf. a. salem, pratique des segments repetes,
+klincksieck, 1987), leurs regroupements par categorisation morphologique, l'utilisation des
+formes caracteristiques ou specificites, l'adjonction des reponses modales ou des phrases ou
+unites de contexte caracteristiques ont perfectionne ces approches, et mis � la disposition de
+beaucoup d'utilisateurs des methodes et des logiciels utiles. dans certains domaines
+d'application precis (comme le traitement automatique des reponses aux questions ouvertes,
+qui nous interesse ici), l'efficacite de la methode, comme complement des approches
+traditionnelles, est reconnue.
+parallelement aux travaux relevant de l�industrie de la langue, que nous avons evoques plus
+haut, et qui relevent d�une ingenierie statistique complexe, il existe donc des applications
+textuelles de la statistique qui restent � portee de main. elles necessitent certes des logiciels
+specifiques, mais la nature familiere et vivante du materiau de base compense en quelque
+sorte la relative complexite des traitements et les difficultes d�interpretation.
+proche des bases de donnees, de l�intelligence artificielle et des reseaux de neurones, de la
+theorie de l�apprentissage, des techniques recentes d�extraction et de gestion des
+connaissances, le domaine textuel illustre bien la polyvalence et la puissance de la
+methodologie statistique. m�me quand les methodes prennent parfois les noms plus exotiques
+de fouille de texte ou de text mining, le statisticien est toujours sollicite quand il s�agit de
+conna�tre la portee reelle des faits observes et des traits structuraux obtenus, de savoir ce que
+l�on a le droit de dire ou le devoir de ne pas dire, c�est-�-dire finalement de donner un statut
+scientifique aux resultats.
